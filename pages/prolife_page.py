@@ -6,6 +6,7 @@ from pages.base_page import BasePage
 class ProfilePage(BasePage):
     def __init__(self, page, timeout=5000):
         super().__init__(page, timeout)
+        self.page = page
         self.ADD_PET_BUTTON= self.page.locator('//*[@id="app"]/main/div/div/div[1]/div/div[1]/button')
         self.NAME_FIELD= self.page.locator('//*[@id="name"]')
         self.AGE_FIELD=self.page.locator('//*[@id="age"]/input')
@@ -13,6 +14,8 @@ class ProfilePage(BasePage):
         self.TYPE_GENDER=self.page.get_by_text('Select a Gender')
         self.CONFIRM_NEW_PET = self.page.get_by_text('Submit')
         self.GOING_TO_PROFILE= self.page.locator('//*[@id="app"]/header/div/ul/li[1]/a/span[2]')
+        self.FIELD_IS_EMAIL_MESSAGE = self.page.get_by_text('This field is email')
+        self.FIELD_IS_REQUIRED_MESSAGE = self.page.get_by_text('This field is required')
 
     def click_add_pet_button(self):
         self.ADD_PET_BUTTON.click(timeout=self.timeout)
@@ -43,3 +46,9 @@ class ProfilePage(BasePage):
 
     def check_profile_page(self):
         expect(self.page).to_have_url('http://34.141.58.52:8080/#/profile')
+
+    def check_invalid_name(self):
+        expect(self.FIELD_IS_EMAIL_MESSAGE).to_be_visible(timeout=self.timeout)
+
+    def check_empty_pet_type(self):
+        expect(self.FIELD_IS_REQUIRED_MESSAGE).to_be_visible(timeout=self.timeout)

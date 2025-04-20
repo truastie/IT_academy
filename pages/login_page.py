@@ -11,7 +11,8 @@ class LoginPage(BasePage):
         self.PASSWORD_FIELD=self.page.locator('//*[@id="password"]/input')
         # self.SUBMIT_BUTTON=self.page.locator('//*[@id="pv_id_3_content"]/div/form/div[3]/button')
         self.SUBMIT_BUTTON=self.page.get_by_text('Submit')
-
+        self.FIELD_IS_REQUIRED_MESSAGE = self.page.get_by_text('This field is required')
+        self.FIELD_IS_EMAIL_MESSAGE = self.page.get_by_text('This field is email')
 
     def fill_login_field(self, login):
         self.LOGIN_FIELD.fill(login, timeout=self.timeout)
@@ -25,3 +26,9 @@ class LoginPage(BasePage):
 
     def check_profile_page(self):
         expect(self.page).to_have_url('http://34.141.58.52:8080/#/profile', timeout=self.timeout)
+
+    def check_empty_password(self):
+        expect(self.FIELD_IS_REQUIRED_MESSAGE).to_be_visible(timeout=self.timeout)
+
+    def check_invalid_email(self):
+        expect(self.FIELD_IS_EMAIL_MESSAGE).to_be_visible(timeout=self.timeout)
