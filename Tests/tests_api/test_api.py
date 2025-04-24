@@ -39,3 +39,10 @@ class TestApiNegative:
         status_code = res[1]
         assert status_code==400
         assert res[0]['detail']=='Username is taken or pass issue'
+
+    @pytest.mark.parametrize('pet_id', [ '12', '0'])
+    def test_delete_non_exist_pet(self, pet_id):
+        res = PetsApi().login(LoginPageConfig.LOGIN_FIELD, LoginPageConfig.PASSWORD_FIELD)
+        status_code = res[1]
+        assert status_code == 400
+        assert res[0]['detail'] == "Signature has expired"
