@@ -7,12 +7,15 @@ from pages.prolife_page import ProfilePage
 
 @pytest.mark.positive
 class TestAddPet:
-    def test_add_pet(self, login):
+    @pytest.mark.parametrize('name', ['a', '1', '@gmail.com'])
+    def test_add_pet(self, login, name):
         page = ProfilePage(login)
         with allure.step('Click add pet button'):
             page.click_add_pet_button()
-        with allure.step(f'Fill name field with {random_name(6)}'):
-            page.fill_name_field(random_name(6))
+        # with allure.step(f'Fill name field with {random_name(6)}'):
+        #     page.fill_name_field(random_name(6))
+        with allure.step(f'Fill name field with {name}'):
+            page.fill_name_field(name)
         with allure.step(f'Fill age field with {random_age(1,10)}'):
             page.fill_age(random_age(1, 10))
         with allure.step('Click type dropdown'):
@@ -31,6 +34,8 @@ class TestAddPet:
             page.check_profile_page()
 
 @pytest.mark.negative
+@allure.title('Test Adding pet Negative')
+@allure.severity(allure.severity_level.CRITICAL)
 class TestNegativeAddPet:
     @pytest.mark.dependency(name='test_add_pet_invalid_name')
     @pytest.mark.parametrize('name', [''])
@@ -58,6 +63,7 @@ class TestNegativeAddPet:
 
     @pytest.mark.dependency(depends=['test_add_pet_invalid_name'])
     @pytest.mark.parametrize('type', [''])
+    @allure.description('Saving new pet without type pet and expect an error message')
     def test_add_pet_invalid_age(self, login, type):
         page = ProfilePage(login)
         with allure.step('Click add pet button'):
