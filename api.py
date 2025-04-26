@@ -10,12 +10,12 @@ class PetsApi:
     def __init__(self):
         self.base_url='http://34.141.58.52:8000/'
 
-    def login(self, email, password)-> json :
-        data ={
-            'email': email,
-            'password': password
-        }
-        res = requests.post(self.base_url+'login', data=json.dumps(data))
+    def login(self, request)-> json :
+        res = requests.post(self.base_url + 'login', data=json.dumps(request))
+        # data ={
+        #     'email': email,
+        #     'password': password
+        # }
         # token = res.json()['token']
         # id = res.json()['id']
         # status_code = res.status_code
@@ -28,11 +28,11 @@ class PetsApi:
         headers = {'Authorization': f'Bearer {login_data[0]["token"]}'}
         data = {
                 "id": 0,
-              "name": name,
-              "type": pet_type,
-              "age": age,
-              "gender": gender,
-              "owner_id": login_data[1],
+                "name": name,
+                "type": pet_type,
+                "age": age,
+                "gender": gender,
+                "owner_id": login_data[0]['id']
         }
         res = requests.post(self.base_url + 'pet', data=json.dumps(data), headers=headers)
         return res.json(), res.status_code
