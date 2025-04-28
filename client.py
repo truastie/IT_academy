@@ -87,7 +87,7 @@ class Client(ClientApi):
         )
         return validate_response(response=response, model=expected_model, status_code=status_code)
 
-    @allure.step('POST /pet Update')
+    @allure.step('POST /pet Image')
     def post_pet_image(self,
                         request:PostPetImageModel,
                         expected_model:PostPetImageResponseModel,
