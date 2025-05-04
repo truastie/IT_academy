@@ -3,8 +3,7 @@ import requests
 from Tests.validate_response import validate_response
 from allure_helper import AllureHelper
 from models.pet_models import LoginModel, LoginResponseModel, RegisterModel, RegisterResponseModel, CreatePetModel, \
-    CreatePetResponseModel, PostPetImageModel, PostPetImageResponseModel, PatchPetUpdateModel, \
-    PatchPetUpdateResponseModel
+    CreatePetResponseModel, PostPetImageModel, PostPetImageResponseModel, PatchPetUpdateModel
 
 
 class ClientApi:
@@ -20,9 +19,8 @@ class ClientApi:
     def request(self,
                 method: str,
                 url: str,
-                json=None,
-                headers = None):
-        headers = headers or {}
+                json=None):
+        headers = {}
         if self.token:
             headers['Authorization'] = f"Bearer {self.token}"
         response = self.session.request(
@@ -48,7 +46,10 @@ class Client(ClientApi):
             url='login',
             json=request.model_dump()
         )
-        return validate_response(response=response, model=expected_model, status_code=status_code)
+        validated_response= validate_response(response=response, model=expected_model, status_code=status_code)
+        token = response.json().get('token')
+        self.token = token
+        return validated_response
 
     @allure.step('POST /register')
     def registration(self,
@@ -78,7 +79,7 @@ class Client(ClientApi):
     @allure.step('CREATE /pet')
     def create_pet(self,
                    request:CreatePetModel,
-                   expected_model,
+                   expected_model: type,
                    status_code: int = 200):
         response = self.request(
             method='post',
