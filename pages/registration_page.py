@@ -1,5 +1,4 @@
 from pytest_playwright.pytest_playwright import page
-import config
 from pages.base_page import BasePage
 
 

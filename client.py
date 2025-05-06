@@ -1,6 +1,6 @@
 import allure
 import requests
-from Tests.validate_response import validate_response
+from tests_api.validate_response import validate_response
 from allure_helper import AllureHelper
 from models.pet_models import LoginModel, LoginResponseModel, RegisterModel, RegisterResponseModel, CreatePetModel, \
     CreatePetResponseModel, PostPetImageModel, PostPetImageResponseModel, PatchPetUpdateModel
@@ -61,6 +61,7 @@ class Client(ClientApi):
             url='register',
             json=request.model_dump()
         )
+        AllureHelper().enrich_allure(response=response)
         return validate_response(response=response, model=expected_model, status_code=status_code)
 
     @allure.step('DELETE /pet {pet_id}')
@@ -78,12 +79,13 @@ class Client(ClientApi):
 #create_pet=post_pet
     @allure.step('CREATE /pet')
     def create_pet(self,
+                   pet_id: int,
                    request:CreatePetModel,
-                   expected_model: type,
+                   expected_model,
                    status_code: int = 200):
         response = self.request(
             method='post',
-            url='pet',
+            url=f'pet/{pet_id}',
             json=request.model_dump()
         )
         return validate_response(response=response, model=expected_model, status_code=status_code)

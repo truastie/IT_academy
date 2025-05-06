@@ -1,4 +1,4 @@
-from config import RegistrationPageConfig
+from utils.config import RegistrationPageConfig
 
 from pages.registration_page import RegistrationPage
 

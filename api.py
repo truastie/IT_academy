@@ -1,9 +1,7 @@
-from importlib.metadata import files
-import Tests.tests_api
 import requests
 import json
 
-from config import LoginPageConfig
+from utils.config import LoginPageConfig
 
 
 class PetsApi:
@@ -47,7 +45,7 @@ class PetsApi:
         login_data = PetsApi().login(LoginPageConfig.LOGIN_FIELD, LoginPageConfig.PASSWORD_FIELD)
         headers = {'Authorization': f'Bearer {login_data[0]["token"]}'}
         files = {
-            'pic': ('parrot.png', open('Tests/tests_api/parrot.png', 'rb'), 'image/png')
+            'pic': ('parrot.png', open('tests_api/parrot.png', 'rb'), 'image/png')
         }
         res = requests.post(self.base_url + f'pet/{pet_id}/image', headers=headers, files=files)
         return res.json(), res.status_code

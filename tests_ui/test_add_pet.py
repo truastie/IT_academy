@@ -1,8 +1,10 @@
 import allure
 import pytest
 
-from generator import random_name
-from generator import random_age
+from client import Client
+from models.pet_models import CreatePetResponseModel, CreatePetModel
+from utils.generator import random_name
+from utils.generator import random_age
 from pages.prolife_page import ProfilePage
 
 @pytest.mark.positive
@@ -12,10 +14,10 @@ class TestAddPet:
         page = ProfilePage(login)
         with allure.step('Click add pet button'):
             page.click_add_pet_button()
-        # with allure.step(f'Fill name field with {random_name(6)}'):
-        #     page.fill_name_field(random_name(6))
-        with allure.step(f'Fill name field with {name}'):
-            page.fill_name_field(name)
+        with allure.step(f'Fill name field with {random_name(6)}'):
+            page.fill_name_field(random_name(6))
+        # with allure.step(f'Fill name field with {name}'):
+        #     page.fill_name_field(name)
         with allure.step(f'Fill age field with {random_age(1,10)}'):
             page.fill_age(random_age(1, 10))
         with allure.step('Click type dropdown'):
@@ -32,6 +34,9 @@ class TestAddPet:
             page.click_going_to_profile()
         with allure.step('Check profile page'):
             page.check_profile_page()
+        pet_id = page.get_url()
+        expected_model = CreatePetResponseModel()
+        Client().create_pet(pet_id, expected_model=expected_model)
 
 @pytest.mark.negative
 @allure.title('Test Adding pet Negative')

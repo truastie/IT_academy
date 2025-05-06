@@ -1,12 +1,11 @@
 import pytest
 
-from Tests.validate_response import validate_response
 from api import PetsApi
-from config import LoginPageConfig
-from models.pet_models import PetResponseModel, LoginResponseModel, LoginModel, RegisterModel, RegisterResponseModel, \
-    DeletePetModel, DeleteResponsePetModel, CreatePetModel, CreatePetResponseModel, \
-    PostPetImageModel, PostPetImageResponseModel, PatchPetUpdateModel, PatchPetUpdateResponseModel
-from client import Client, ClientApi
+from utils.config import LoginPageConfig
+from models.pet_models import LoginResponseModel, LoginModel, RegisterModel, RegisterResponseModel, \
+    DeleteResponsePetModel, CreatePetModel, CreatePetResponseModel, \
+    PatchPetUpdateModel, PatchPetUpdateResponseModel
+from client import Client
 
 
 @pytest.mark.positive
@@ -96,11 +95,11 @@ class TestApi:
         )
         created_pet = client.create_pet(
             request=create_request,
-            expected_model=CreatePetResponseModel,
+            expected_model=CreatePetResponseModel(),
             status_code=200
         )
         file= {
-            'pic':('parrot.png', open('C:\\Users\\nasty\\PycharmProjects\\AutoProject\\Tests/tests_api/parrot.png', 'rb'), 'image/png')
+            'pic':('parrot.png', open('/tests_api/parrot.png', 'rb'), 'image/png')
         }
         response = client.session.post(
             f"{client.base_url}/pet/{created_pet.id}/image",

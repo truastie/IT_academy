@@ -3,7 +3,7 @@ import re
 import allure
 import pytest
 
-from config import LoginPageConfig
+from utils.config import LoginPageConfig
 from pages.login_page import LoginPage
 
 @pytest.mark.positive

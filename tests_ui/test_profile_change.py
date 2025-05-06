@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from config import ProfilePageConfig
+from utils.config import ProfilePageConfig
 from pages.profile_change_pet import ChangePet
 
 

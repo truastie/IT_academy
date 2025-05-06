@@ -1,9 +1,7 @@
-import playwright
 import pytest
 
-from config import LoginPageConfig
+from utils.config import LoginPageConfig
 from pages.login_page import LoginPage
-from pages.registration_page import RegistrationPage
 
 
 @pytest.fixture(scope='session')
