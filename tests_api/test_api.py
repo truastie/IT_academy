@@ -1,11 +1,11 @@
 import pytest
 
-from api import PetsApi
+from utils.api import PetsApi
 from utils.config import LoginPageConfig
 from models.pet_models import LoginResponseModel, LoginModel, RegisterModel, RegisterResponseModel, \
     DeleteResponsePetModel, CreatePetModel, CreatePetResponseModel, \
     PatchPetUpdateModel, PatchPetUpdateResponseModel
-from client import Client
+from utils.client import Client
 
 
 @pytest.mark.positive
@@ -115,7 +115,7 @@ class TestApi:
         )
         client.login(login_request)
         client.patch_pet(request=PatchPetUpdateModel(
-            id = 0,
+            id=10,
             name= 'helloworld',
             type= 'non',
             age=5

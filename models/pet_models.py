@@ -47,10 +47,13 @@ class DeleteResponsePetModel(BaseModel):
 class CreatePetModel(BaseModel):
     name: str
     type: str
-    age: Optional[int] = None
+    age: int
 
 class CreatePetResponseModel(BaseModel):
     id: int
+    name: str
+    type: str
+    age: int
 
 class PostPetImageModel(BaseModel):
     id: int
@@ -61,7 +64,7 @@ class PostPetImageResponseModel(BaseModel):
 
 
 class PatchPetUpdateModel(BaseModel):
-    id: int
+    id: Optional[int] = None
     name: Optional[str] = None
     type: Optional[str] = None
     age: Optional[int] = None

@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from client import Client
+from utils.client import Client
 from models.pet_models import CreatePetResponseModel, CreatePetModel
 from utils.generator import random_name
 from utils.generator import random_age
@@ -12,14 +12,16 @@ class TestAddPet:
     @pytest.mark.parametrize('name', ['a', '1', '@gmail.com'])
     def test_add_pet(self, login, name):
         page = ProfilePage(login)
+        with allure.step('Open Profile page'):
+            page.open_page('http://34.141.58.52:8080/#/profile')
         with allure.step('Click add pet button'):
             page.click_add_pet_button()
-        with allure.step(f'Fill name field with {random_name(6)}'):
-            page.fill_name_field(random_name(6))
-        # with allure.step(f'Fill name field with {name}'):
-        #     page.fill_name_field(name)
+        # with allure.step(f'Fill name field with {random_name(6)}'):
+        #     page.fill_name_field(random_name(6))
+        with allure.step(f'Fill name field with {name}'):
+            page.fill_name_field(name)
         with allure.step(f'Fill age field with {random_age(1,10)}'):
-            page.fill_age(random_age(1, 10))
+            page.fill_age(str(random_age(1, 10)))
         with allure.step('Click type dropdown'):
             page.click_type_dropdown()
         with allure.step('Click and choose type item "dog"'):
@@ -34,10 +36,15 @@ class TestAddPet:
             page.click_going_to_profile()
         with allure.step('Check profile page'):
             page.check_profile_page()
-        pet_id = page.get_url()
-        # request_model = CreatePetModel()
+        name = name
+        age = random_age(1, 10)
+        request_model = CreatePetModel(
+            name=name,
+            type='dog',
+            age= age
+        )
         expected_model = CreatePetResponseModel
-        Client().create_pet(pet_id,expected_model=expected_model)
+        Client().create_pet(request=request_model,expected_model=expected_model)
 
 
 @pytest.mark.negative

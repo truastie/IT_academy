@@ -2,6 +2,7 @@ import allure
 import requests
 from tests_api.validate_response import validate_response
 from allure_helper import AllureHelper
+
 from models.pet_models import LoginModel, LoginResponseModel, RegisterModel, RegisterResponseModel, CreatePetModel, \
     CreatePetResponseModel, PostPetImageModel, PostPetImageResponseModel, PatchPetUpdateModel
 
@@ -49,6 +50,7 @@ class Client(ClientApi):
         validated_response= validate_response(response=response, model=expected_model, status_code=status_code)
         token = response.json().get('token')
         self.token = token
+        AllureHelper().enrich_allure(response=response)
         return validated_response
 
     @allure.step('POST /register')
@@ -74,6 +76,7 @@ class Client(ClientApi):
             url=f'pet/{pet_id}',
             json= None
         )
+        AllureHelper().enrich_allure(response=response)
         return validate_response(response=response, model=expected_model, status_code=status_code)
 
 #create_pet=post_pet
@@ -84,9 +87,10 @@ class Client(ClientApi):
                    status_code: int = 200):
         response = self.request(
             method='post',
-            url=self.base_url + 'pet',
+            url=self.base_url+ f'pet',
             json=request.model_dump()
         )
+        AllureHelper().enrich_allure(response=response)
         return validate_response(response=response, model=expected_model, status_code=status_code)
 
     @allure.step('POST /pet Image')
@@ -100,16 +104,19 @@ class Client(ClientApi):
             url=self.base_url + f'pet/{pet_id}/image',
             json = request.model_dump()
         )
+        AllureHelper().enrich_allure(response=response)
         return validate_response(response=response, model=expected_model, status_code=status_code)
 
     @allure.step('PATCH /pet Update')
     def patch_pet(self,
+                  pet_id: int,
                   request: PatchPetUpdateModel,
-                  expected_model: type,
+                  expected_model,
                   status_code: int = 200):
         response = self.request(
             method='patch',
-            url=self.base_url + f'pet',
+            url=f"{self.base_url}/pet/{pet_id}",
             json=request.model_dump()
         )
+        AllureHelper().enrich_allure(response=response)
         return validate_response(response=response, model=expected_model, status_code=status_code)

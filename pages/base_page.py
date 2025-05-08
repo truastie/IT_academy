@@ -1,3 +1,6 @@
+from typing import re
+
+
 class BasePage:
     def __init__(self,page, timeout=5000):
         self.page=page
@@ -8,3 +11,7 @@ class BasePage:
 
     def get_url(self):
         return self.page.url
+
+    def patch_url(self):
+        return self.page.url
+

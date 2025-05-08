@@ -1,6 +1,10 @@
+import re
+
 import allure
 import pytest
 
+from models.pet_models import PatchPetUpdateModel, PatchPetUpdateResponseModel
+from utils.client import Client
 from utils.config import ProfilePageConfig
 from pages.profile_change_pet import ChangePet
 
@@ -20,3 +24,12 @@ class TestProfileChange:
             profile_page.fill_pet_name_field('Mikki')
         with allure.step('Click save button'):
             profile_page.click_save_button()
+            pet_url = profile_page.patch_url()
+            pet_id =
+            request_model=PatchPetUpdateModel(
+                name='Mikki'
+            )
+            expected_model = PatchPetUpdateResponseModel(
+                id=pet_id
+            )
+            Client().patch_pet(pet_id=pet_id,request=request_model,expected_model=expected_model)
