@@ -36,15 +36,8 @@ class TestAddPet:
             page.click_going_to_profile()
         with allure.step('Check profile page'):
             page.check_profile_page()
-        name = name
-        age = random_age(1, 10)
-        request_model = CreatePetModel(
-            name=name,
-            type='dog',
-            age= age
-        )
         expected_model = CreatePetResponseModel
-        Client().create_pet(request=request_model,expected_model=expected_model)
+        Client().create_pet(expected_model=expected_model)
 
 
 @pytest.mark.negative

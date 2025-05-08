@@ -25,11 +25,8 @@ class TestProfileChange:
         with allure.step('Click save button'):
             profile_page.click_save_button()
             pet_url = profile_page.patch_url()
-            pet_id =
-            request_model=PatchPetUpdateModel(
-                name='Mikki'
-            )
+            request_model=PatchPetUpdateModel()
             expected_model = PatchPetUpdateResponseModel(
-                id=pet_id
+                id=pet_url
             )
-            Client().patch_pet(pet_id=pet_id,request=request_model,expected_model=expected_model)
+            Client().patch_pet(pet_id=pet_url,request=request_model,expected_model=expected_model)
