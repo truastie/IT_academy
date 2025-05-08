@@ -109,7 +109,6 @@ class Client(ClientApi):
 
     @allure.step('PATCH /pet Update')
     def patch_pet(self,
-                  pet_id: int,
                   request: PatchPetUpdateModel,
                   expected_model,
                   status_code: int = 200):

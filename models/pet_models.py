@@ -68,4 +68,4 @@ class PatchPetUpdateModel(BaseModel):
     name: Optional[str] = None
 
 class PatchPetUpdateResponseModel(BaseModel):
-    id: int
+    id: Optional[int] = None
