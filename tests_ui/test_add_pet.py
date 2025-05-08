@@ -36,7 +36,7 @@ class TestAddPet:
             page.check_profile_page()
         pet_id = page.get_url()
         # request_model = CreatePetModel()
-        expected_model = CreatePetResponseModel()
+        expected_model = CreatePetResponseModel
         Client().create_pet(pet_id,expected_model=expected_model)
 
 

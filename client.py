@@ -97,7 +97,7 @@ class Client(ClientApi):
                         status_code: int = 200):
         response = self.request(
             method='post',
-            url=self.base_url + f'pet{pet_id}image',
+            url=self.base_url + f'pet/{pet_id}/image',
             json = request.model_dump()
         )
         return validate_response(response=response, model=expected_model, status_code=status_code)
