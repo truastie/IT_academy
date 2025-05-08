@@ -79,25 +79,25 @@ class Client(ClientApi):
 #create_pet=post_pet
     @allure.step('CREATE /pet')
     def create_pet(self,
-                   pet_id: int,
                    request:CreatePetModel,
                    expected_model,
                    status_code: int = 200):
         response = self.request(
             method='post',
-            url=f'pet/{pet_id}',
+            url=self.base_url + 'pet',
             json=request.model_dump()
         )
         return validate_response(response=response, model=expected_model, status_code=status_code)
 
     @allure.step('POST /pet Image')
     def post_pet_image(self,
+                        pet_id: int,
                         request:PostPetImageModel,
                         expected_model:PostPetImageResponseModel,
                         status_code: int = 200):
         response = self.request(
             method='post',
-            url=f'pet{id}image',
+            url=self.base_url + f'pet{pet_id}image',
             json = request.model_dump()
         )
         return validate_response(response=response, model=expected_model, status_code=status_code)
@@ -109,7 +109,7 @@ class Client(ClientApi):
                   status_code: int = 200):
         response = self.request(
             method='patch',
-            url=f'pet',
+            url=self.base_url + f'pet',
             json=request.model_dump()
         )
         return validate_response(response=response, model=expected_model, status_code=status_code)

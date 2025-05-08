@@ -7,4 +7,4 @@ class BasePage:
          self.page.goto(link)
 
     def get_url(self):
-        return self.page.url()
+        return self.page.url

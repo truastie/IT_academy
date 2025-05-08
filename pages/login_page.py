@@ -9,7 +9,6 @@ class LoginPage(BasePage):
         self.page=page
         self.LOGIN_FIELD= self.page.locator('//*[@id="login"]')
         self.PASSWORD_FIELD=self.page.locator('//*[@id="password"]/input')
-        # self.SUBMIT_BUTTON=self.page.locator('//*[@id="pv_id_3_content"]/div/form/div[3]/button')
         self.SUBMIT_BUTTON=self.page.get_by_text('Submit')
         self.FIELD_IS_REQUIRED_MESSAGE = self.page.get_by_text('This field is required')
         self.FIELD_IS_EMAIL_MESSAGE = self.page.get_by_text('This field is email')

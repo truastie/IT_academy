@@ -21,11 +21,11 @@ class PetsApi:
         return res.json(), res.status_code
 
 
-    def post_pet(self, name:str, pet_type:str, age:int, gender:str)-> json:
+    def post_pet(self,pet_id:int, name:str, pet_type:str, age:int, gender:str)-> json:
         login_data = PetsApi().login(LoginPageConfig.LOGIN_FIELD, LoginPageConfig.PASSWORD_FIELD)
         headers = {'Authorization': f'Bearer {login_data[0]["token"]}'}
         data = {
-                "id": 0,
+                "pet_id": 0,
                 "name": name,
                 "type": pet_type,
                 "age": age,
