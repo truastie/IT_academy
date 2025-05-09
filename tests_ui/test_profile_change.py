@@ -1,4 +1,5 @@
 import re
+from http.client import responses
 
 import allure
 import pytest
@@ -24,10 +25,12 @@ class TestProfileChange:
             profile_page.fill_pet_name_field('Mikki')
         with allure.step('Click save button'):
             profile_page.click_save_button()
-            pet_url = profile_page.patch_url()
+            pet_url = profile_page.get_url()
+            pet_id_str=pet_url.split('/')[-1]
+            pet_id=int(pet_id_str)
             request_model=PatchPetUpdateModel(
-                id=0,
+                id=pet_id,
                 name="Mikki"
             )
             expected_model = PatchPetUpdateResponseModel()
-            Client().patch_pet(pet_url,request=request_model,expected_model=expected_model)
+            Client().patch_pet(pet_id,request=request_model,expected_model=expected_model)

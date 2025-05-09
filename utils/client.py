@@ -114,7 +114,7 @@ class Client(ClientApi):
                   status_code: int = 200):
         response = self.request(
             method='patch',
-            url=f"{self.base_url}+/pet",
+            url=f"{self.base_url}/pet",
             json=request.model_dump()
         )
         AllureHelper().enrich_allure(response=response)

@@ -12,6 +12,4 @@ class BasePage:
     def get_url(self):
         return self.page.url
 
-    def patch_url(self):
-        return self.page.url
 
