@@ -28,14 +28,14 @@ class LoginModel(BaseModel):
 # }
 
 class RegisterModel(BaseModel):
-    email: Optional[str]
-    password: Optional[str]
-    confirm_password: Optional[str]
+    email: Optional[str] = None
+    password: Optional[str] = None
+    confirm_password: Optional[str] = None
 
 class RegisterResponseModel(BaseModel):
     token: Optional[str] = None
-    email: str
-    id: int
+    email: Optional[str] = None
+    id: Optional[int] = None
 
 
 class DeletePetModel(BaseModel):

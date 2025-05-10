@@ -1,6 +1,7 @@
 from playwright.sync_api import expect
 
 from pages.base_page import BasePage
+from utils.config import ProfilePageConfig
 
 
 class ProfilePage(BasePage):
@@ -45,7 +46,7 @@ class ProfilePage(BasePage):
         self.GOING_TO_PROFILE.click()
 
     def check_profile_page(self):
-        expect(self.page).to_have_url('http://34.141.58.52:8080/#/profile')
+        expect(self.page).to_have_url(ProfilePageConfig.PROFILE_PAGE_URL)
 
     def check_invalid_name(self):
         expect(self.FIELD_IS_EMAIL_MESSAGE).to_be_visible(timeout=self.timeout)
