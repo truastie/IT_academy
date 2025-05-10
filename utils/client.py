@@ -87,7 +87,7 @@ class Client(ClientApi):
                    status_code: int = 200):
         response = self.request(
             method='post',
-            url=self.base_url+ f'pet',
+            url=f'pet',
             json=request.model_dump()
         )
         AllureHelper().enrich_allure(response=response)
@@ -101,7 +101,7 @@ class Client(ClientApi):
                         status_code: int = 200):
         response = self.request(
             method='post',
-            url=self.base_url + f'pet/{pet_id}/image',
+            url=f'pet/{pet_id}/image',
             json = request.model_dump()
         )
         AllureHelper().enrich_allure(response=response)
@@ -109,13 +109,14 @@ class Client(ClientApi):
 
     @allure.step('PATCH /pet Update')
     def patch_pet(self,
-                  request: PatchPetUpdateModel,
+                  request:PatchPetUpdateModel,
                   expected_model,
                   status_code: int = 200):
         response = self.request(
             method='patch',
-            url=f"{self.base_url}/pet",
+            url=f'pet/',
             json=request.model_dump()
         )
         AllureHelper().enrich_allure(response=response)
         return validate_response(response=response, model=expected_model, status_code=status_code)
+
