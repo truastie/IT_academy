@@ -29,11 +29,11 @@ class TestProfileChange:
             profile_page.fill_pet_name_field('Mikki')
         with allure.step('Click save button'):
             profile_page.click_save_button()
-            # pet_url = profile_page.get_url()
-            # pet_id=int(pet_url.split('/')[-1])
-            # request_model=PatchPetUpdateModel(
-            #     id=pet_id,
-            #     name="Mikki"
-            # )
-            # expected_model = PatchPetUpdateResponseModel
-            # Client().patch_pet(request_model, expected_model)
+            pet_url = profile_page.get_url()
+            pet_id=int(pet_url.split('/')[-1])
+            request_model=PatchPetUpdateModel(
+                id=pet_id,
+                name="Mikki"
+            )
+            expected_model = PatchPetUpdateResponseModel
+            Client().patch_pet(request_model, expected_model)
