@@ -20,8 +20,11 @@ class TestRegistration:
             registr_page.fill_confirm_password(RegistrationPageConfig.PASSWORD_FIELD)
       with allure.step('Click Submit button'):
             registr_page.click_submit_button()
-      request_model=RegisterModel()
-      expected_model = RegisterResponseModel()
-      Client().registration(request_model, expected_model=expected_model)
 
-
+            request_model=RegisterModel(
+              email=RegistrationPageConfig.REGISTR_FIELD,
+              password=RegistrationPageConfig.PASSWORD_FIELD,
+              confirm_password=RegistrationPageConfig.PASSWORD_FIELD
+          )
+            expected_model = RegisterResponseModel()
+            Client().registration(request=request_model, expected_model=expected_model)

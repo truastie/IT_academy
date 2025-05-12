@@ -16,9 +16,11 @@ class RegistrationPage(BasePage):
 
     def fill_password_field(self, password):
         self.PASSWORD_FIELD.fill(password)
+        self.page.mouse.click(10, 10)
 
     def fill_confirm_password(self, password):
         self.CONFIRM_PASSWORD.fill(password)
+        self.page.mouse.click(10, 10)
 
     def click_submit_button(self):
         self.SUBMIT_BUTTON.click()

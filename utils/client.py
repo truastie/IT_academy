@@ -57,7 +57,7 @@ class Client(ClientApi):
     def registration(self,
                      request: RegisterModel,
                      expected_model: RegisterResponseModel,
-                     status_code: int = 201):
+                     status_code: int = 200):
         response = self.request(
             method='post',
             url='register',
@@ -85,6 +85,9 @@ class Client(ClientApi):
                    request:CreatePetModel,
                    expected_model,
                    status_code: int = 200):
+        headers = {}
+        if hasattr(self, 'token') and self.token:
+            headers['Authorization'] = f'Bearer {self.token}'
         response = self.request(
             method='post',
             url=f'pet',
@@ -99,6 +102,9 @@ class Client(ClientApi):
                         request:PostPetImageModel,
                         expected_model:PostPetImageResponseModel,
                         status_code: int = 200):
+        headers = {}
+        if hasattr(self, 'token') and self.token:
+            headers['Authorization'] = f'Bearer {self.token}'
         response = self.request(
             method='post',
             url=f'pet/{pet_id}/image',
