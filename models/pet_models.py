@@ -64,8 +64,11 @@ class PostPetImageResponseModel(BaseModel):
 
 
 class PatchPetUpdateModel(BaseModel):
-    id: Optional[int] = None
-    name: Optional[str] = None
+    id: int
+    name: str
+    type: str
+    age: int
+    gender: str
 
 class PatchPetUpdateResponseModel(BaseModel):
     id: int

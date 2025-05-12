@@ -109,14 +109,20 @@ class Client(ClientApi):
 
     @allure.step('PATCH /pet Update')
     def patch_pet(self,
-                  request:PatchPetUpdateModel,
+                  request: PatchPetUpdateModel,
                   expected_model,
                   status_code: int = 200):
+        headers = {}
+        if hasattr(self, 'token') and self.token:
+            headers['Authorization'] = f'Bearer {self.token}'
+        json_body = request.model_dump()
+        print(json_body)
         response = self.request(
             method='patch',
-            url=f'pet/',
-            json=request.model_dump()
+            url='pet/',
+            json=json_body
         )
+
         AllureHelper().enrich_allure(response=response)
         return validate_response(response=response, model=expected_model, status_code=status_code)
 

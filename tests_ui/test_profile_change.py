@@ -4,7 +4,7 @@ from http.client import responses
 import allure
 import pytest
 
-from models.pet_models import PatchPetUpdateModel, PatchPetUpdateResponseModel
+from models.pet_models import PatchPetUpdateModel, PatchPetUpdateResponseModel, LoginModel
 from pages.login_page import LoginPage
 from pages.prolife_page_add_pet import ProfilePage
 from utils.client import Client
@@ -33,7 +33,13 @@ class TestProfileChange:
             pet_id=int(pet_url.split('/')[-1])
             request_model=PatchPetUpdateModel(
                 id=pet_id,
-                name="Mikki"
+                name="Mikki",
+                type= "dog",
+                age= 3,
+                gender= "Female",
+
             )
             expected_model = PatchPetUpdateResponseModel
-            Client().patch_pet(request_model, expected_model)
+            client = Client()
+            client.login(LoginModel(email=LoginPageConfig.LOGIN_FIELD, password=LoginPageConfig.PASSWORD_FIELD))
+            client.patch_pet(request_model, expected_model)
