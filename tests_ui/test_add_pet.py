@@ -2,8 +2,8 @@ import allure
 import pytest
 
 from utils.client import Client
-from models.pet_models import CreatePetResponseModel, CreatePetModel
-from utils.config import ProfilePageConfig
+from models.pet_models import CreatePetResponseModel, CreatePetModel, LoginModel
+from utils.config import ProfilePageConfig, LoginPageConfig
 from utils.generator import random_name
 from utils.generator import random_age
 from pages.prolife_page_add_pet import ProfilePage
@@ -37,8 +37,17 @@ class TestAddPet:
             page.click_going_to_profile()
         with allure.step('Check profile page'):
             page.check_profile_page()
-        # expected_model = CreatePetResponseModel
-        # Client().create_pet(expected_model=expected_model)
+            name=random_name(6)
+            age=random_age(1,10)
+            request_model=CreatePetModel(
+                name=name,
+                type="Female",
+                age=age
+            )
+            expected_model = CreatePetResponseModel
+            client = Client()
+            client.login(LoginModel(email=LoginPageConfig.LOGIN_FIELD, password=LoginPageConfig.PASSWORD_FIELD))
+            client.create_pet(request=request_model,expected_model=expected_model)
 
 
 @pytest.mark.negative

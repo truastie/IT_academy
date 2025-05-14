@@ -88,10 +88,12 @@ class Client(ClientApi):
         headers = {}
         if hasattr(self, 'token') and self.token:
             headers['Authorization'] = f'Bearer {self.token}'
+        json_body = request.model_dump()
+        print(json_body)
         response = self.request(
             method='post',
-            url=f'pet',
-            json=request.model_dump()
+            url='pet',
+            json=json_body
         )
         AllureHelper().enrich_allure(response=response)
         return validate_response(response=response, model=expected_model, status_code=status_code)
