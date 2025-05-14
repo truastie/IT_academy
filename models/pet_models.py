@@ -51,9 +51,7 @@ class CreatePetModel(BaseModel):
 
 class CreatePetResponseModel(BaseModel):
     id: int
-    # name: str
-    # type: str
-    # age: int
+
 
 class PostPetImageModel(BaseModel):
     id: int
